@@ -1,0 +1,21 @@
+database:
+  url: mongodb://localhost:27017/checker
+sqs:
+  queues:
+    default: &default
+      AttributeNames: 
+        - all
+      MaxNumberOfMessages: 1
+      VisibilityTimeout: 100
+      WaitTimeSeconds: 20
+    messages:
+      <<: *default
+      QueueUrl: https://sqs.us-west-2.amazonaws.com/654218245621/employees
+      MessageAttributeNames: 
+        - _id
+        - method
+        - adapters
+        - sentAt
+        - receivedAt
+        - updatedAt
+        - publisher
