@@ -2,39 +2,42 @@
 
 const fs      = require('fs');
 const YAML    = require('js-yaml');
-const AWS     = require('aws-sdk');
+const fakeSQS = require('./mocks/sqs');
 const PouchDB = require('pouchdb');
-const Promise = require('bluebird');
-const glob    = require( 'glob' );
-const path    = require( 'path' );
-PouchDB.plugin(require('pouchdb-upsert'));
 const Empyrean  = require('../lib/empyrean');
 
-const mode     = "test";
+PouchDB.plugin(require('pouchdb-upsert'));
+PouchDB.plugin(require('pouchdb-erase'));
 
-let secrets = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
+const mode      = "test";
 
-AWS.config.update({accessKeyId: secrets.aws.access_key_id, secretAccessKey: secrets.aws.secret_access_key, region: secrets.aws.region});
+let secrets     = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 
-let adapters  = {myspace: require('./mocks/adapters/myspace')};
+let adapters    = {myspace: require('./mocks/adapters/myspace')};
 
-let empyrean = new Empyrean({
+let db          = new PouchDB(secrets.pouchdb.database);
+
+let testMessage = YAML.safeLoad(fs.readFileSync('./spec/fixtures/test-message.yml', 'utf8'));
+
+let sqs         = new fakeSQS([testMessage]);
+
+let empyrean    = new Empyrean({
   secrets:  secrets,
-  db:       new PouchDB(secrets.pouchdb.database),
-  sqs:      new AWS.SQS({apiVersion: '2012-11-05'}),
+  db:       db,
+  sqs:      sqs,
   adapters: adapters
   // config:   YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'))
 });
 
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
 describe("routeMessages", function() {
 
-  let originalTimeout;
-  beforeEach(() => {
-    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+  afterEach((done) => {
+    db.erase().then(() => {
+      done();
+    });
   });
-
-  let testMessage = YAML.safeLoad(fs.readFileSync('./spec/fixtures/test-message.yml', 'utf8'));
 
   it("writes a successful push to the database", (done) => {
 

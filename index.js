@@ -1,15 +1,15 @@
 'use strict';
-const fs      = require('fs');
-const YAML    = require('js-yaml');
-const AWS     = require('aws-sdk');
-const PouchDB = require('pouchdb');
-const Promise = require('bluebird');
-const glob    = require( 'glob' );
-const path    = require( 'path' );
+const fs        = require('fs');
+const YAML      = require('js-yaml');
+const AWS       = require('aws-sdk');
+const PouchDB   = require('pouchdb');
+const Promise   = require('bluebird');
+const glob      = require( 'glob' );
+const path      = require( 'path' );
 PouchDB.plugin(require('pouchdb-upsert'));
 const Empyrean  = require('./lib/empyrean');
 
-const mode     = process.env.EMPYREAN_ENV || "development";
+const mode      = process.env.EMPYREAN_ENV || "development";
 
 let secrets = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 

@@ -1,3 +1,5 @@
+MessageId: a12345
+ReceiptHandle: b6789
 MessageAttributes:
   _id: news_story-12345
   method: post
