@@ -1,5 +1,3 @@
-database:
-  url: mongodb://localhost:27017/checker
 sqs:
   queues:
     default: &default
