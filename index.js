@@ -3,7 +3,6 @@ const fs        = require('fs');
 const YAML      = require('js-yaml');
 const AWS       = require('aws-sdk');
 const PouchDB   = require('pouchdb');
-const Promise   = require('bluebird');
 const glob      = require( 'glob' );
 const path      = require( 'path' );
 PouchDB.plugin(require('pouchdb-upsert'));
