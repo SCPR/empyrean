@@ -1,0 +1,63 @@
+$schema: http://json-schema.org/draft-04/schema#
+title: Article Schema
+type: object
+properties: 
+  _id: 
+    type: string
+  title: 
+    type: string
+  shortTitle:
+    type: string
+  byline:
+    type: string
+  attributions:
+    type: string
+  teaser:
+    type: string
+  body:
+    type: string
+  abstract:
+    type: string
+  category:
+    type: string
+  tags:
+    type: array
+    items: 
+      type: object
+  href:
+    type: string
+  assets:
+    type: array
+    items: 
+      type: object
+  featureType:
+    type: string
+  relatedContent:
+    type: array
+  links:
+    type: array
+    items: 
+      type: object
+  assetDisplay:
+    type: string
+  disqusIdentifier:
+    type: string
+  audio:
+    type: array
+    items: 
+      type: object
+  source:
+    description: The organization that an article originated from. 
+    type: string
+  publishedAt:
+    type: string
+  updatedAt:
+    type: string
+  
+required: 
+  - _id
+  - title
+  - byline
+  - body
+  - source
+  - publishedAt

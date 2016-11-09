@@ -1,0 +1,22 @@
+$schema: http://json-schema.org/draft-04/schema#
+title: Link Schema
+type: object
+properties: 
+  title:
+    type: string
+  href:
+    type: string
+  # maybe get rid of contentId all together
+  # or treat it as a piece of optional metadata
+  #
+  # otherwise, we really shouldn't ever link
+  # to data that isn't exposed by a hyperlink
+  contentId:
+    type: string
+  type:
+    type: string
+    default: text/html
+  tags:
+    type: array
+  oembed:
+    type: string

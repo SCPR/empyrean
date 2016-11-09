@@ -42,7 +42,6 @@ describe("routeMessages", function() {
   it("writes a successful push to the database", (done) => {
 
     empyrean.routeMessages([testMessage]).then(() => {
-      debugger
       empyrean.db.get(testMessage.MessageAttributes._id).then((doc) => {
         expect(doc.syndications.myspace.code).toEqual(201);
         done();
