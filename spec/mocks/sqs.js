@@ -39,7 +39,7 @@ module.exports = class {
       this.messages.forEach(deleter);
       this.hiddenMessages.forEach(deleter);
     });
-    debugger
+
     callback(undefined, {
       Failed: failed,
       Successful: successful

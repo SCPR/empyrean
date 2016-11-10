@@ -19,7 +19,7 @@ let adapters  = {};
 glob.sync('./adapters/*.js').forEach((file) => {
   let adapterName       = file.split('.js')[0].split('./adapters/')[1];
   adapters[adapterName] = require(path.resolve(file));
-}) 
+}); 
 
 let empyrean = new Empyrean({
   secrets:  secrets,

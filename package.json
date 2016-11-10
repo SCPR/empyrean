@@ -4,7 +4,8 @@
   "description": "Really simple syndication.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/jasmine/bin/jasmine.js"
+    "test": "./node_modules/jasmine/bin/jasmine.js",
+    "debug-test": "node debug ./node_modules/jasmine/bin/jasmine.js"
   },
   "author": "Ravenstine",
   "license": "MIT",
@@ -14,7 +15,8 @@
     "js-yaml": "^3.6.1",
     "node-glob": "^1.2.0",
     "pouchdb": "^6.0.7",
-    "pouchdb-upsert": "^2.0.2"
+    "pouchdb-upsert": "^2.0.2",
+    "use-strict": "^1.0.1"
   },
   "devDependencies": {
     "jasmine": "^2.5.2",

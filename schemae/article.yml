@@ -1,8 +1,8 @@
 $schema: http://json-schema.org/draft-04/schema#
 title: Article Schema
 type: object
-properties: 
-  _id: 
+properties:
+  _id:
     type: string
   title: 
     type: string
