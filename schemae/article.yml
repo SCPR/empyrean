@@ -53,7 +53,7 @@ properties:
     type: string
   updatedAt:
     type: string
-  
+
 required: 
   - _id
   - title

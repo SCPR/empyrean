@@ -8,16 +8,15 @@ const Empyrean  = require('../lib/empyrean');
 
 const mode      = "test";
 
-let secrets     = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
+// let secrets     = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 
-let adapters    = {myspace: require('./mocks/adapters/myspace')};
+let adapters    = {myspace: require('./mocks/adapters/myspace')({})};
 
 let testMessage = YAML.safeLoad(fs.readFileSync('./spec/fixtures/test-message.yml', 'utf8'));
 
 let sqs         = new fakeSQS([testMessage]);
 
 let empyrean    = new Empyrean({
-  secrets:  secrets,
   sqs:      sqs,
   adapters: adapters,
   config:   YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'))

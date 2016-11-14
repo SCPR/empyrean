@@ -13,14 +13,13 @@ const mode      = "test";
 
 let secrets     = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 
-let adapters    = {myspace: require('./mocks/adapters/myspace'), missing: require('../adapters/missing')};
+let adapters    = {myspace: require('./mocks/adapters/myspace')({}), missing: require('../adapters/missing')({})};
 
 let db          = new PouchDB(secrets.pouchdb.database);
 
 let sqs         = new fakeSQS([]);
 
 let empyrean    = new Empyrean({
-  secrets:  secrets,
   db:       db,
   sqs:      sqs,
   adapters: adapters

@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+'use strict';
+
+let repl = require('repl');
+
+let replServer = repl.start({
+  prompt: "empyrean > "
+});
+
+replServer.context.empyrean = require('../index');
