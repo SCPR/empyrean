@@ -1,4 +1,5 @@
 sqs:
+  message_queue_interval: 10
   queues:
     default: &default
       AttributeNames: 
@@ -8,8 +9,7 @@ sqs:
       WaitTimeSeconds: 20
     messages:
       <<: *default
-      QueueUrl: https://sqs.us-west-2.amazonaws.com/654218245621/employees
-      MessageAttributeNames: 
+      MessageAttributeNames:
         - _id
         - method
         - adapters

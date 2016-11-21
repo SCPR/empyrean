@@ -5,7 +5,7 @@
 let repl = require('repl');
 
 let replServer = repl.start({
-  prompt: "empyrean > "
+  prompt: "grand-central > "
 });
 
-replServer.context.empyrean = require('../index');
+replServer.context.grandCentral = require('../index');

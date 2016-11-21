@@ -1,33 +1,21 @@
 'use strict';
 
-let response = {
-  code: 409,
-  message: "Specified adapter is missing."
+let response = () => {
+  return new Promise((resolve) => {
+    return resolve({
+      code: 409,
+      message: "Specified adapter is missing."
+    });
+  })
 }
 
 module.exports = () => {
 
   return {
-    get: () => {
-      return new Promise((resolve) => {
-        return resolve(response);
-      })
-    },
-    post: () => {
-      return new Promise((resolve) => {
-        return resolve(response);
-      })
-    },
-    put: () => {
-      return new Promise((resolve) => {
-        return resolve(response);
-      })
-    },
-    delete: () => {
-      return new Promise((resolve) => {
-        return resolve(response);
-      })
-    }
+    get: response,
+    post: response,
+    put: response,
+    delete: response
   };
 
 }

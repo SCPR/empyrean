@@ -4,7 +4,8 @@ const fs      = require('fs');
 const YAML    = require('js-yaml');
 const fakeSQS = require('./mocks/sqs');
 const PouchDB = require('pouchdb');
-const Empyrean  = require('../lib/empyrean');
+const GrandCentral  = require('../lib/grand-central');
+const Logger    = require('../lib/logger');
 
 PouchDB.plugin(require('pouchdb-upsert'));
 PouchDB.plugin(require('pouchdb-erase'));
@@ -19,10 +20,11 @@ let db          = new PouchDB(secrets.pouchdb.database);
 
 let sqs         = new fakeSQS([]);
 
-let empyrean    = new Empyrean({
+let gc          = new GrandCentral({
   db:       db,
   sqs:      sqs,
-  adapters: adapters
+  adapters: adapters,
+  logger: new Logger(mode)
   // config:   YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'))
 });
 
@@ -47,22 +49,26 @@ describe("routeMessages", function() {
 
   it("writes a successful push to the database", (done) => {
     let testMessage = generateTestMessage();
-    empyrean.routeMessages([testMessage]).then(() => {
-      empyrean.db.get(testMessage.MessageAttributes._id).then((doc) => {
+    gc.routeMessages([testMessage]).then(() => {
+      gc.db.get(testMessage.MessageAttributes._id.StringValue).then((doc) => {
         expect(doc.syndications.myspace.code).toEqual(201);
         done();
+      }).catch((err) => {
+        done.fail(err);
       });
     });
   });
 
   describe("a nonexistent adapter", () => {
     it("writes a status of 409 to the syndication record", (done) => {
-      let message = generateTestMessage({_id: "77654346"});
-      message.MessageAttributes.adapters = '["gooblegobble"]';
-      empyrean.routeMessages([message]).then(() => {
-        empyrean.db.get(message.MessageAttributes._id).then((doc) => {
+      let message = generateTestMessage();
+      message.MessageAttributes.adapters.StringValue = 'gooblegobble';
+      gc.routeMessages([message]).then(() => {
+        gc.db.get(message.MessageAttributes._id.StringValue).then((doc) => {
           expect(doc.syndications.gooblegobble.code).toEqual(409);
           done();
+        }).catch((err) => {
+          done.fail(err);
         });
       });
     });

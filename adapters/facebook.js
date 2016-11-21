@@ -15,17 +15,18 @@ module.exports = (secrets) => {
               html_source: body
             }
           }, (err, response, body) => {
-            if(body.id) {
+            if(body && JSON.parse(body).id) {
               resolve({
                 code: 201,
-                message: "Instant article successfully published."
-              })
+                message: "Instant article successfully published.",
+                body: body
+              });
             } else {
               resolve({
                 code: 409,
                 message: "Something about the message is invalid.",
                 body: body
-              })
+              });
             }
           })
       });
