@@ -11,6 +11,8 @@ properties:
   #
   # otherwise, we really shouldn't ever link
   # to data that isn't exposed by a hyperlink
+  contentType:
+    type: string
   contentId:
     type: string
   type:
@@ -20,3 +22,7 @@ properties:
     type: array
   oembed:
     type: string
+
+required:
+  - title
+  - type

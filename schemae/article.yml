@@ -4,7 +4,11 @@ type: object
 properties:
   _id:
     type: string
-  title: 
+  type:
+    description: The type of content.  e.g. news-story, blog-post, event, show-segment
+    type: string
+  title:
+    description: The full title of the content.  This is used as the English heading in a push notification.
     type: string
   shortTitle:
     type: string
@@ -15,6 +19,7 @@ properties:
   teaser:
     type: string
   body:
+    description: The body of the content.  This is used as the "subject" of a push notification.
     type: string
   abstract:
     type: string
@@ -24,25 +29,36 @@ properties:
     type: array
     items: 
       type: object
-  href:
-    type: string
+  link:
+    description: A link object containing the href to the canonical URL, if there already is one.
+    type: object
   assets:
+    description: A list of images that are a part of this story, but are not inline.  The first is assumed to be the 'lead' asset.
     type: array
     items: 
       type: object
   featureType:
     type: string
   relatedContent:
+    description: A list of links to related content.  Said content must be published to a publicly-accessible href.
     type: array
+    items:
+      type: object
   links:
+    description: A list of links to hrefs outside the domain of the publisher.
     type: array
     items: 
       type: object
+  actionLink:
+    description: A link to be used for a user action.  An example would be if the content is an event with an RSVP URL, which would be included as the href of the link.
+    type: object
   assetDisplay:
+    description: How the lead asset(s) is intended to be displayed.  e.x. photo|slideshow|video
     type: string
   disqusIdentifier:
     type: string
   audio:
+    description: A list of links to audio.  The hrefs in these links should always lead directly to an audio file or a stream.
     type: array
     items: 
       type: object
@@ -53,6 +69,42 @@ properties:
     type: string
   updatedAt:
     type: string
+  dateRange:
+    description: A generic date range property that can be used by content such as events and episodes.
+    type: object
+    properties:
+      start:
+        type: string
+      end:
+        type: string
+    required:
+      - start
+      - end
+  location:
+    description: The primary location that the content is referring to, if any.
+    type: object
+    properties:
+      name:
+        type: string
+      link:
+        type: object
+      addressLine1:
+        type: string
+      addressLine2:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      zipCode:
+        type: string
+      coordinates:
+        type: string
+    required:
+      - name
+  parent:
+    description: A link to a conceptual parent, such as a program if the content is an episode of that program.  The href, if any, should be to the index page of the parent.  The contentType and contentID properties on the link object should be used to contain information relevant to a publisher, but is not required.
+    type: object
 
 required: 
   - _id
