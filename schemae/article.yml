@@ -5,7 +5,7 @@ properties:
   _id:
     type: string
   type:
-    description: The type of content.  e.g. news-story, blog-post, event, show-segment
+    description: The type of content.  Only necessary if relevant to the destination publisher.  e.g. news-story, blog-post, event, show-segment
     type: string
   title:
     description: The full title of the content.  This is used as the English heading in a push notification.
@@ -13,19 +13,29 @@ properties:
   shortTitle:
     type: string
   byline:
+    description: The attribution string intended to be displayed by third-parties.  Make sure to include this if you want to append a string to the end fo the attribution like the publishing organization.
     type: string
   attributions:
-    type: string
+    description: A list of links to attributions for programmatic use.  This is mostly necessary if you are syndicating content to your own systems.
+    type: array
+    items:
+      type: object
+      properties:
+        title:
+          type: string
   teaser:
+    description: A short summary of the content, with a max-length of 145 characters.  
     type: string
   body:
     description: The body of the content.  This is used as the "subject" of a push notification.
     type: string
   abstract:
+    description: A long summary of the content, with no max-length.
     type: string
   category:
     type: string
   tags:
+    description: A list of links to tags.  Each link may have an href to an index page for a given tag, but it is not required.
     type: array
     items: 
       type: object
@@ -37,7 +47,11 @@ properties:
     type: array
     items: 
       type: object
+  assetDisplay:
+    description: How the lead asset(s) is intended to be displayed.  e.x. photo_emphasized|photo_deemphasized|slideshow|video|hidden
+    type: string
   featureType:
+    description: An arbitrary label describing the featured media.  For example, if the story primarily features a piece of audio, then the feature type would be "audio".  Any string can be used as a feature type.
     type: string
   relatedContent:
     description: A list of links to related content.  Said content must be published to a publicly-accessible href.
@@ -52,9 +66,6 @@ properties:
   actionLink:
     description: A link to be used for a user action.  An example would be if the content is an event with an RSVP URL, which would be included as the href of the link.
     type: object
-  assetDisplay:
-    description: How the lead asset(s) is intended to be displayed.  e.x. photo|slideshow|video
-    type: string
   disqusIdentifier:
     type: string
   audio:
