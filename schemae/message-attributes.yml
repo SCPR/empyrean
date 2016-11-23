@@ -7,8 +7,14 @@ properties:
   sentAt:
     type: string
   method:
+    description: <get|post|put|delete>
     type: string
-  adapters:
+  adapter:
+    description: The grand-central API adapter to publish through.
+    type: string
+  channel:
+    description: A channel within the destination to be published to.  For example, a specific Facebook page.
     type: string
   publisher:
+    description: The slug-name of the originating publisher.
     type: string

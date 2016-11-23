@@ -1,6 +1,7 @@
 $schema: http://json-schema.org/draft-04/schema#
 title: Article Schema
 type: object
+version: 1
 properties:
   _id:
     type: string
@@ -33,12 +34,19 @@ properties:
     description: A long summary of the content, with no max-length.
     type: string
   category:
-    type: string
+    description: The category the content falls under.  This should be a link with an optional href to an index page for the category.
+    type: object
+    properties:
+      title:
+        type: string
   tags:
     description: A list of links to tags.  Each link may have an href to an index page for a given tag, but it is not required.
     type: array
     items: 
       type: object
+      properties:
+        title:
+          type: string
   link:
     description: A link object containing the href to the canonical URL, if there already is one.
     type: object

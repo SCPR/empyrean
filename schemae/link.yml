@@ -5,24 +5,31 @@ properties:
   title:
     type: string
   href:
-    type: string
-  # maybe get rid of contentId all together
-  # or treat it as a piece of optional metadata
-  #
-  # otherwise, we really shouldn't ever link
-  # to data that isn't exposed by a hyperlink
-  contentType:
-    type: string
-  contentId:
+    description: A full-path hyperlink.
     type: string
   type:
+    description: The MIME type of the content being linked to.  Will be text/html most of the time.
     type: string
     default: text/html
   tags:
+    description: A list of links to tags.  Each link may have an href to an index page for a given tag, but it is not required.
     type: array
+    items:
+      type: object
   oembed:
+    type: string
+  contentType:
+    description: The type of content.  <story|episode|segment|blog-entry|event>
+    type: string
+  contentId:
+    description: A unique identifier for the content that is useful to the original publisher.
     type: string
 
 required:
   - title
   - type
+
+anyOf:
+  # One of these requirements must be met
+  - required: href
+  - required: contentId
