@@ -62,7 +62,7 @@ describe("routeMessages", function() {
   describe("a nonexistent adapter", () => {
     it("writes a status of 409 to the syndication record", (done) => {
       let message = generateTestMessage();
-      message.MessageAttributes.adapters.StringValue = 'gooblegobble';
+      message.MessageAttributes.adapter.StringValue = 'gooblegobble';
       gc.routeMessages([message]).then(() => {
         gc.db.get(message.MessageAttributes._id.StringValue).then((doc) => {
           expect(doc.syndications.gooblegobble.code).toEqual(409);
