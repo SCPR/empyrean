@@ -2,7 +2,7 @@ sqs:
   message_queue_interval: 10
   queues:
     default: &default
-      AttributeNames: 
+      AttributeNames:
         - all
       MaxNumberOfMessages: 1
       VisibilityTimeout: 100

@@ -8,4 +8,4 @@ let replServer = repl.start({
   prompt: "grand-central > "
 });
 
-replServer.context.grandCentral = require('../index');
+replServer.context.gc = require('../index');

@@ -1,14 +1,15 @@
 MessageId: a12345
 ReceiptHandle: b6789
+MD5OfBody: 9876543212afb
 MessageAttributes:
   _id: 
     StringValue: news_story-12345
   method: 
     StringValue: post
-  sentAt: 
-    StringValue: 2016-11-03T19:14:07.066Z
+  castType:
+    StringValue: news-story
   publisher: 
-    StringValue: scprv4
+    StringValue: kpcc
   adapter: 
     StringValue: myspace
 Body: '{"body": "And the way that youre told, impresses your minds within, the way you are is what you conceive of with the programming they gave you giving you all those things they call rules, or sins, or something layered in something others get in some insane brain they thought they had something to hold on to other than the truth they exist within the self and the individual in conjunction with the soul that lives within all things."}'

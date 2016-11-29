@@ -1,0 +1,74 @@
+$schema: http://json-schema.org/draft-04/schema#
+title: Message Schema
+id: /Message
+description: This should be applied directly to the message objects we receive from SQS.
+type: object
+properties:
+  MD5OfBody:
+    type: string
+  MessageAttributes:
+    type: object
+    properties:
+      _id:
+        type: object
+        properties:
+          StringValue:
+            type: string
+        required:
+          - StringValue
+      method:
+        description: <get|post|put|delete>
+        type: object
+        properties:
+          StringValue:
+            type: string
+        required:
+          - StringValue
+      adapter:
+        description: The grand-central API adapter to publish through.
+        type: object
+        properties:
+          StringValue:
+            type: string
+        required:
+          - StringValue
+      castType:
+        description: A name for a type that the article should be cast as.  This may be a different value depending on the adapter being used.
+        type: object
+        properties:
+          StringValue:
+            type: string
+        required:
+          - StringValue
+      channel:
+        description: A channel within the destination to be published to.  For example, a specific Facebook page.
+        type: object
+        properties:
+          StringValue:
+            type: string
+        required:
+          - StringValue
+      publisher:
+        description: The slug-name of the originating publisher.
+        type: object
+        properties:
+          StringValue:
+            type: string
+        required:
+          - StringValue
+    required:
+      - _id
+      - method
+      - adapter
+      - castType
+      - publisher
+  Body:
+    description: The actual article content encoded as a JSON string.
+    type: string
+    format: 'json'
+    # pattern: /\A("([^"\\]*|\\["\\bfnrt\/]|\\u[0-9a-f]{4})*"|-?(?=[1-9]|0(?!\d))\d+(\.\d+)?([eE][+-]?\d+)?|true|false|null|\[(?:(?1)(?:,(?1))*)?\s*\]|\{(?:\s*"([^"\\]*|\\["\\bfnrt\/]|\\u[0-9a-f]{4})*"\s*:(?1)(?:,\s*"([^"\\]*|\\["\\bfnrt\/]|\\u[0-9a-f]{4})*"\s*:(?1))*)?\s*\})\Z/is
+
+required:
+  - MessageAttributes
+  - Body
+  - MD5OfBody

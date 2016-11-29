@@ -8,9 +8,16 @@ _|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""
 ```
 A microservice for publishing content to various media sources.
 
+## Prerequisites
+
+- Node.js >= v5.0.0
+- NPM >= 3.10.0
+
 ## Installation
 
-Clone this repo and `npm install` in the root directory.
+Create a new project directory by cloning this repo.  This gives you a deployable project that you can add your own API keys to as well as custom API adapters.
+
+Then run `npm install` to pull in dependencies.
 
 ## Testing
 
@@ -22,7 +29,9 @@ Amazon SQS is the primary way to send content to Grand Central.  It is a message
 
 ## Adapters
 
-Adapters are modules that create a consistent interface between Grand Central and a given API.  Every adapter must have **GET**, **POST**, **PUT**, and **DELETE** functions, and every function should return an object with the bare-minimum of an HTTP status code and a message.  Even if the adapter doesn't actually work with a REST interface, or if a request can't be made, it still should return an HTTP status code and a message to consistently indicate the status of a request.  If a request was successful and returns some information like an ID or a revision, that information should also be included in the response object.
+Adapters are modules that create a consistent interface between Grand Central and a given API.  Every adapter must have **GET**, **POST**, **PUT**, and **DELETE** functions that return promises, and every promise callback should be given an object with the bare-minimum of an HTTP status code and a message.  Even if the adapter doesn't actually work with a REST interface, or if a request can't be made, it still should return an HTTP status code and a message to consistently indicate the status of a request.  If a request was successful and returns some information like an ID or a revision, that information should also be included in the response object.
+
+Promises from adapter functions should always resolve unless there is an actual runtime error.  Errors coming in from an API response, or validation errors, should still resolve and errors should be represented as HTTP response codes.
 
 ### Facebook
 
@@ -49,3 +58,24 @@ Facebook requires a **client_access_token** and a **page_access_token**.  Client
    `https://graph.facebook.com/<USER_ID>/accounts?access_token=<CLIENT_ACCESS_TOKEN>`
 
 For now, in `secrets.yml`, store the **page_access_token** under adapters.facebook.clientAccessToken.
+
+There's probably a way to get a longer lasting token(or to renew one), but I've not yet figured that part out.
+
+### Syndication Notes
+
+Some syndications, such as Facebook Instant Articles, require a canonical URL to the content.  This means that, if you were to select Facebook as an adapter, the `link` property for the article you are sending must contain a link object with the canonical URL as the href.  If the server that is hosting your content at its canonical URL is not treated as a syndication(i.e. receives content by other means outside of Grand Central) and always sends messages to Grand Central, this shouldn't be a problem.  On the other hand, if you are treating your content server as a syndication, and you are syndicating to a provider that requires a canonical URL, it is necessary to first syndicate to only your content server and then have that server send syndication messages to Grand Central with the created canonical URL.
+
+The steps would look similar to this:
+
+1) CMS => SQS => Grand Central => Content Server (Content Server successfully saves content available at a canonical URL).
+2) Content Server => SQS => Grand Central => Syndication (e.g. Facebook)
+
+For your Content Server to know which adapters to syndicate to, I suggest adding a comma-separated list of adapters to a MessageAttribute on the original message between the CMS and the Content Server.  It is your choice what to name this attribute as you will have to write your content server to handle this message.  
+
+Remember that you should only have to do this if you are publishing to somewhere that requires a canonical URL.  A push notification, for example, may not require this.
+
+## Development & Debugging
+
+A `console` command provides a REPL for development.  `npm run console` will bring it up.  A global `gc` object is provided so you can inspect every part of Grand Central and manually call functions.
+
+An easy way to run tests in debug mode is to use `npm run debug-test`, which will run Jasmine tests bug with Node debugging enabled(meaning execution will pause at breakpoints).

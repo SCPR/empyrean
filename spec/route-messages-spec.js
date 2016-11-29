@@ -16,15 +16,18 @@ let secrets     = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 
 let adapters    = {myspace: require('./mocks/adapters/myspace')({}), missing: require('../adapters/missing')({})};
 
+let validator   = require('../lib/schema-validator'); 
+
 let db          = new PouchDB(secrets.pouchdb.database);
 
 let sqs         = new fakeSQS([]);
 
 let gc          = new GrandCentral({
-  db:       db,
-  sqs:      sqs,
-  adapters: adapters,
-  logger: new Logger(mode)
+  db:        db,
+  sqs:       sqs,
+  adapters:  adapters,
+  logger:    new Logger(mode),
+  validator: validator
   // config:   YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'))
 });
 

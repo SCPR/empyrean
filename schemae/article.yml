@@ -1,5 +1,6 @@
 $schema: http://json-schema.org/draft-04/schema#
 title: Article Schema
+id: /Article
 type: object
 version: 1
 properties:
@@ -20,10 +21,7 @@ properties:
     description: A list of links to attributions for programmatic use.  This is mostly necessary if you are syndicating content to your own systems.
     type: array
     items:
-      type: object
-      properties:
-        title:
-          type: string
+      $ref: /Link
   teaser:
     description: A short summary of the content, with a max-length of 145 characters.  
     type: string
@@ -35,26 +33,20 @@ properties:
     type: string
   category:
     description: The category the content falls under.  This should be a link with an optional href to an index page for the category.
-    type: object
-    properties:
-      title:
-        type: string
+    $ref: /Link
   tags:
     description: A list of links to tags.  Each link may have an href to an index page for a given tag, but it is not required.
     type: array
     items: 
-      type: object
-      properties:
-        title:
-          type: string
+      $ref: /Link
   link:
     description: A link object containing the href to the canonical URL, if there already is one.
-    type: object
+    $ref: /Link
   assets:
-    description: A list of images that are a part of this story, but are not inline.  The first is assumed to be the 'lead' asset.
+    description: A list of link to images that are a part of this story, but are not inline.  The first is assumed to be the 'lead' asset.
     type: array
     items: 
-      type: object
+      $ref: /Link
   assetDisplay:
     description: How the lead asset(s) is intended to be displayed.  e.x. photo_emphasized|photo_deemphasized|slideshow|video|hidden
     type: string
@@ -65,22 +57,22 @@ properties:
     description: A list of links to related content.  Said content must be published to a publicly-accessible href.
     type: array
     items:
-      type: object
+      $ref: /Link
   links:
     description: A list of links to hrefs outside the domain of the publisher.
     type: array
     items: 
-      type: object
+      $ref: /Link
   actionLink:
     description: A link to be used for a user action.  An example would be if the content is an event with an RSVP URL, which would be included as the href of the link.
-    type: object
+    $ref: /Link
   disqusIdentifier:
     type: string
   audio:
     description: A list of links to audio.  The hrefs in these links should always lead directly to an audio file or a stream.
     type: array
     items: 
-      type: object
+      $ref: /Link
   source:
     description: The organization that an article originated from. 
     type: string
@@ -106,7 +98,7 @@ properties:
       name:
         type: string
       link:
-        type: object
+        $ref: /Link
       addressLine1:
         type: string
       addressLine2:
@@ -123,7 +115,7 @@ properties:
       - name
   parent:
     description: A link to a conceptual parent, such as a program if the content is an episode of that program.  The href, if any, should be to the index page of the parent.  The contentType and contentID properties on the link object should be used to contain information relevant to a publisher, but is not required.
-    type: object
+    $ref: /Link
 
 required: 
   - _id

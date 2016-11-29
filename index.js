@@ -10,11 +10,13 @@ const Logger        = require('./lib/logger');
 
 const mode          = process.env.EMPYREAN_ENV || "development";
 
-let secrets  = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
+let secrets   = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 
-let config   = YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
+let config    = YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 
-config.sqs.queues.messages.QueueUrl = secrets.sqs.queue_url;
+let validator = require('./lib/schema-validator'); 
+
+config.sqs.queues.messages.QueueUrl = secrets.aws.sqs.queue_url;
 
 AWS.config.update({accessKeyId: secrets.aws.access_key_id, secretAccessKey: secrets.aws.secret_access_key, region: secrets.aws.region});
 
@@ -25,8 +27,9 @@ let gc       = new GrandCentral({
   sqs:      new AWS.SQS({apiVersion: '2012-11-05'}),
   adapters: adapters,
   config:   config,
-  secrets: secrets,
-  logger: new Logger(mode)
+  secrets:  secrets,
+  logger:   new Logger(mode),
+  validator: validator
 });
 
 module.exports = gc;

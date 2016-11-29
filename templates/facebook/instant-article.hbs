@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" prefix="op: http://media.facebook.com/op#">
+  <head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="{{link.href}}">
+    <meta property="op:markup_version" content="v1.0">
+    <title>{{title}}</title>
+    <meta property="fb:article_style" content="default">
+  </head>
+  <body>
+    <article>
+      <header>
+        <h1>{{title}}</h1>
+        <h2>{{teaser}}</h2>
+        <time class='op-published'>{{publishedAt}}</time>
+        <time class='op-modified'>{{updatedAt}}</time>
+
+        <address>
+          <a>{{byline}}</a>
+        </address>
+
+        {{> (assetDisplay) assets}}
+
+      </header>
+
+      {{body}}
+
+      <footer>
+        <small>&copy; 2016 Southern California Public Radio</small>
+      </footer>
+    </article>
+  </body>
+</html>

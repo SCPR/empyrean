@@ -1,5 +1,6 @@
 $schema: http://json-schema.org/draft-04/schema#
 title: Link Schema
+id: /Link
 type: object
 properties: 
   title:
@@ -11,6 +12,9 @@ properties:
     description: The MIME type of the content being linked to.  Will be text/html most of the time.
     type: string
     default: text/html
+  description:
+    description: A description of what is being linked to.  One way this is used is as a figure caption if the link is an image being used as an article asset.
+    type: string
   tags:
     description: A list of links to tags.  Each link may have an href to an index page for a given tag, but it is not required.
     type: array
@@ -19,7 +23,7 @@ properties:
   oembed:
     type: string
   contentType:
-    description: The type of content.  <story|episode|segment|blog-entry|event>
+    description: A name for the type of content that is useful to the original publisher.  <story|episode|segment|blog-entry|event>
     type: string
   contentId:
     description: A unique identifier for the content that is useful to the original publisher.

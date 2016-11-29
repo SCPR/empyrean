@@ -28,7 +28,7 @@ module.exports = (secrets) => {
                 body: body
               });
             }
-          })
+          });
       });
     },
     put: (metadata, body) => {
