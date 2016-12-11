@@ -19,6 +19,7 @@ properties:
       method:
         description: <get|post|put|delete>
         type: object
+        format: methodName
         properties:
           StringValue:
             type: string
@@ -62,11 +63,11 @@ properties:
       - adapter
       - castType
       - publisher
+      - channel
   Body:
     description: The actual article content encoded as a JSON string.
     type: string
-    format: 'json'
-    # pattern: /\A("([^"\\]*|\\["\\bfnrt\/]|\\u[0-9a-f]{4})*"|-?(?=[1-9]|0(?!\d))\d+(\.\d+)?([eE][+-]?\d+)?|true|false|null|\[(?:(?1)(?:,(?1))*)?\s*\]|\{(?:\s*"([^"\\]*|\\["\\bfnrt\/]|\\u[0-9a-f]{4})*"\s*:(?1)(?:,\s*"([^"\\]*|\\["\\bfnrt\/]|\\u[0-9a-f]{4})*"\s*:(?1))*)?\s*\})\Z/is
+    format: json
 
 required:
   - MessageAttributes

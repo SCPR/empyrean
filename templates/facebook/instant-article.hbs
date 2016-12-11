@@ -12,18 +12,18 @@
       <header>
         <h1>{{title}}</h1>
         <h2>{{teaser}}</h2>
-        <time class='op-published'>{{publishedAt}}</time>
-        <time class='op-modified'>{{updatedAt}}</time>
+        <time class='op-published' dateTime="{{publishedAt}}">{{moment publishedAt 'MMMM Do YYYY, h:mm:ss a'}}</time>
+        <time class='op-modified' datetime="{{updatedAt}}">{{moment updatedAt 'MMMM Do YYYY, h:mm:ss a'}}</time>
 
         <address>
           <a>{{byline}}</a>
         </address>
 
-        {{> (assetDisplay) assets}}
+        {{> assets/default assets.[1]}}
 
       </header>
 
-      {{body}}
+      {{{body}}}
 
       <footer>
         <small>&copy; 2016 Southern California Public Radio</small>

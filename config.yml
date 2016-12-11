@@ -12,8 +12,7 @@ sqs:
       MessageAttributeNames:
         - _id
         - method
-        - adapters
-        - sentAt
-        - receivedAt
-        - updatedAt
+        - adapter
+        - castType
         - publisher
+        - channel

@@ -2,3 +2,5 @@ node_modules/
 db/
 npm-debug.log
 secrets.yml
+log/
+.portable-holes.yml

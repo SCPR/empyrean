@@ -27,6 +27,8 @@ Grand Central uses Jasmine for testing.  You can run `npm run test` to perform t
 
 Amazon SQS is the primary way to send content to Grand Central.  It is a message queue that Grand Central continually polls for new content.  This has the advantage of being very fail-safe; AWS is very reliable so even if Grand Central has a problem, other products such as Outpost can continue to push content and that content will *eventually* be published.  If Grand Central crashes on a piece of content, that content will still re-appear in the SQS queue so that Grand Central can try it again later when the issue has been worked out.  Because SQS is part of AWS, it's very easy to set up IAM users to add messages to Grand Central's queue.  If we decided to have other projects besides Outpost publish syndicated content, it would be trivial to create a new IAM user with its own access keys and permissions.  SQS also provides decent visibility into the current state of publishing as well as basic monitoring.
 
+See `schemae/message.yml` for information on what properties an SQS message should have. 
+
 ## Adapters
 
 Adapters are modules that create a consistent interface between Grand Central and a given API.  Every adapter must have **GET**, **POST**, **PUT**, and **DELETE** functions that return promises, and every promise callback should be given an object with the bare-minimum of an HTTP status code and a message.  Even if the adapter doesn't actually work with a REST interface, or if a request can't be made, it still should return an HTTP status code and a message to consistently indicate the status of a request.  If a request was successful and returns some information like an ID or a revision, that information should also be included in the response object.
@@ -73,6 +75,10 @@ The steps would look similar to this:
 For your Content Server to know which adapters to syndicate to, I suggest adding a comma-separated list of adapters to a MessageAttribute on the original message between the CMS and the Content Server.  It is your choice what to name this attribute as you will have to write your content server to handle this message.  
 
 Remember that you should only have to do this if you are publishing to somewhere that requires a canonical URL.  A push notification, for example, may not require this.
+
+## Schemae
+
+Grand Central uses JSON schemas to validate the information it receives.  There are currently separate schemae to validate SQS message properties, the body content(i.e. article JSON), and "links" within the body content.  The schemae are stored as YAML files under the `schemae` directory.  While `lib/grand-central.js` is responsible for validating the SQS message properties, each adapter is responsible for validating the content JSON.
 
 ## Development & Debugging
 
