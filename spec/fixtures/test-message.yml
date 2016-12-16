@@ -6,6 +6,8 @@ MessageAttributes:
     StringValue: news_story-12345
   method: 
     StringValue: post
+  channel:
+    StringValue: stories
   castType:
     StringValue: news-story
   publisher: 

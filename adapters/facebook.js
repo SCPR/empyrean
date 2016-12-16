@@ -55,6 +55,7 @@ module.exports = (secrets) => {
             let render;
 
             try {
+              debugger
               render = views.call('instant-article', article)
             } catch(err) {
               return resolve({
@@ -74,10 +75,12 @@ module.exports = (secrets) => {
                   }
                 }, (err, response, body) => {
                   if(body && JSON.parse(body).id) {
+                    debugger
                     resolve({
                       code: 201,
                       message: "Instant article successfully published.",
-                      body: body
+                      body: body,
+                      remoteId: JSON.parse(body).id
                     });
                   } else {
                     resolve({
@@ -96,7 +99,6 @@ module.exports = (secrets) => {
                 body: err
               })
             })
-
 
           })
           .catch((err) => {
@@ -118,8 +120,16 @@ module.exports = (secrets) => {
       return new Promise((resolve, reject) => {
         request
           .delete({
-            url: `https://graph.facebook.com/${metadata.id}?access_token=${secrets.clientAccessToken}`
+            url: `https://graph.facebook.com/${message.remoteId}?access_token=${secrets.clientAccessToken}`
           }, (err, response, body) => {
+            // debugger
+            // if(err || (body && !JSON.parse(body).success)) {
+            //   resolve({
+            //     code: 409,
+            //     message: "Instant article deletion failed.",
+            //     body: err
+            //   })
+            // }
             resolve({
               code: 200,
               message: "Instant article successfully deleted.",
