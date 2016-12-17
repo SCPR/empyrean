@@ -10,7 +10,6 @@
   },
   "bin": {
     "grand-central": "./bin/grand-central",
-    "all-aboard": "./bin/all-aboard",
     "grand-central-console": "./bin/console"
   },
   "author": "Ravenstine",
