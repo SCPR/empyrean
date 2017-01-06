@@ -85,3 +85,4 @@ Grand Central uses JSON schemas to validate the information it receives.  There 
 A `console` command provides a REPL for development.  `npm run console` will bring it up.  A global `gc` object is provided so you can inspect every part of Grand Central and manually call functions.
 
 An easy way to run tests in debug mode is to use `npm run debug-test`, which will run Jasmine tests bug with Node debugging enabled(meaning execution will pause at breakpoints).
+

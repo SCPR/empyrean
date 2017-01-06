@@ -33,6 +33,7 @@ properties:
     type: string
   category:
     description: The category the content falls under.  This should be a link with an optional href to an index page for the category.
+    type: object
     $ref: /Link
   tags:
     description: A list of links to tags.  Each link may have an href to an index page for a given tag, but it is not required.
@@ -41,6 +42,7 @@ properties:
       $ref: /Link
   link:
     description: A link object containing the href to the canonical URL, if there already is one.
+    type: object
     $ref: /Link
   assets:
     description: A list of link to images that are a part of this story, but are not inline.  The first is assumed to be the 'lead' asset.
@@ -65,6 +67,7 @@ properties:
       $ref: /Link
   actionLink:
     description: A link to be used for a user action.  An example would be if the content is an event with an RSVP URL, which would be included as the href of the link.
+    type: object
     $ref: /Link
   disqusIdentifier:
     type: string
@@ -115,6 +118,7 @@ properties:
       - name
   parent:
     description: A link to a conceptual parent, such as a program if the content is an episode of that program.  The href, if any, should be to the index page of the parent.  The contentType and contentID properties on the link object should be used to contain information relevant to a publisher, but is not required.
+    type: object
     $ref: /Link
 
 required: 

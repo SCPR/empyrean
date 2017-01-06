@@ -12,13 +12,17 @@ let views                = handlebarsLoadTree(Handlebars, path.resolve('./templa
 let filters              = {
   cleanup          : require('../lib/filters/cleanup'),
   embedPlaceholders: require('../lib/filters/embed-placeholders'),
+  assetHost        : require('../lib/filters/assethost'),
   instantArticles  : require('../lib/filters/instant-articles')
 }
 
-let filter = (html) => {
+let filter = (html, secrets) => {
   let result = filters.cleanup(html)
         .then((html) => {
           return filters.embedPlaceholders(html);
+        })
+        .then((html) => {
+          return filters.assetHost(html, secrets);
         })
         .then((html) => {
           return filters.instantArticles(html);
@@ -31,6 +35,7 @@ Handlebars.registerHelper('moment', (timeString, formatString) => {
 })
 
 module.exports = (secrets) => {
+  let fbSecrets = secrets.adapters.facebook;
   return {
     post: (message) => {
       let channel = message.MessageAttributes.channel.StringValue;
@@ -49,13 +54,13 @@ module.exports = (secrets) => {
 
         let article = message.body; 
 
-        filter(article.body)
+        filter(article.body, secrets)
           .then((body) => {
-
+            article.body = body; // replace the article body with the filtered version
+            
             let render;
 
             try {
-              debugger
               render = views.call('instant-article', article)
             } catch(err) {
               return resolve({
@@ -70,12 +75,12 @@ module.exports = (secrets) => {
                 .post({
                   url: `https://graph.facebook.com/${channel}/instant_articles`,
                   form: {
-                    access_token: secrets.clientAccessToken,
+                    access_token: fbSecrets.clientAccessToken,
                     html_source: html
                   }
                 }, (err, response, body) => {
                   if(body && JSON.parse(body).id) {
-                    debugger
+                    // debugger
                     resolve({
                       code: 201,
                       message: "Instant article successfully published.",
@@ -120,7 +125,7 @@ module.exports = (secrets) => {
       return new Promise((resolve, reject) => {
         request
           .delete({
-            url: `https://graph.facebook.com/${message.remoteId}?access_token=${secrets.clientAccessToken}`
+            url: `https://graph.facebook.com/${message.remoteId}?access_token=${fbSecrets.clientAccessToken}`
           }, (err, response, body) => {
             // debugger
             // if(err || (body && !JSON.parse(body).success)) {

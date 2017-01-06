@@ -26,7 +26,7 @@ properties:
     description: A name for the type of content that is useful to the original publisher.  <story|episode|segment|blog-entry|event>
     type: string
   contentId:
-    description: A unique identifier for the content that is useful to the original publisher.
+    description: A unique identifier for the content that is useful to the original publisher.  If a link is being used as a tag, this is where the 'slug' should go.
     type: string
 
 required:

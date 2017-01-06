@@ -22,7 +22,7 @@ AWS.config.update({accessKeyId: secrets.aws.access_key_id, secretAccessKey: secr
 
 let adapters = loadAdapters('./adapters', secrets);
 
-let gc       = new GrandCentral({
+let gc      = new GrandCentral({
   db:       new PouchDB(secrets.pouchdb.database),
   sqs:      new AWS.SQS({apiVersion: '2012-11-05'}),
   adapters: adapters,

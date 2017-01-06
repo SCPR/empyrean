@@ -16,3 +16,6 @@ sqs:
         - castType
         - publisher
         - channel
+assethost:
+  server: a.scpr.org
+  prefix: /api

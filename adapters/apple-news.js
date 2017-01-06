@@ -8,9 +8,11 @@ const htmlToAppleJSON      = require('../lib/filters/apple-news');
 
 module.exports = (secrets) => {
 
+  let appleSecrets = secrets.adapters['apple-news'];
+
   let client   = new AppleNews({
-    apiId: secrets.apiId,
-    apiSecret: secrets.apiSecret
+    apiId: appleSecrets.apiId,
+    apiSecret: appleSecrets.apiSecret
   });
 
   let post = (message) => {
@@ -38,7 +40,7 @@ module.exports = (secrets) => {
           .then((json) => {
 
             client.createArticle({
-              channelId: secrets.channels.kpcc,  // eventually this should come from the message
+              channelId: appleSecrets.channels.kpcc,  // eventually this should come from the message
               article: json,
               isPreview: true
             }, (err, response, data) => {
@@ -119,7 +121,6 @@ module.exports = (secrets) => {
     }
 
     let del = (message) => {
-      debugger
       return new Promise((resolve, reject) => {
         // I'm guessing this might work.  lol
         client.deleteArticle({

@@ -2,6 +2,14 @@
 
 'use strict';
 
-let grandCentral = require('../index.js');
+let gc = require('../index.js');
 
-grandCentral.perform();
+let fs = require('fs');
+
+let bootMessage = fs.readFileSync(`${__dirname}/../boot-message.txt`, 'utf-8');
+let pkg        = JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, 'utf-8'));
+
+console.log(bootMessage);
+console.log(`v${pkg.version}\n\n\n`);
+
+gc.perform();
