@@ -36,9 +36,8 @@ module.exports = (secrets) => {
 
         let article = message.body;
 
-        htmlToAppleJSON(article)
+        htmlToAppleJSON(article, secrets)
           .then((json) => {
-
             client.createArticle({
               channelId: appleSecrets.channels.kpcc,  // eventually this should come from the message
               article: json,
@@ -86,9 +85,8 @@ module.exports = (secrets) => {
 
         let article = message.body;
 
-        htmlToAppleJSON(article)
+        htmlToAppleJSON(article, secrets)
           .then((json) => {
-
             client.updateArticle({
               articleId: message.remoteId,
               article: json,
