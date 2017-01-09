@@ -38,6 +38,7 @@ module.exports = (secrets) => {
 
         htmlToAppleJSON(article, secrets)
           .then((json) => {
+            debugger
             client.createArticle({
               channelId: appleSecrets.channels.kpcc,  // eventually this should come from the message
               article: json,
