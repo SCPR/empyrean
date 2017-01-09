@@ -39,11 +39,9 @@ module.exports = (secrets) => {
   return {
     post: (message) => {
       let channel = message.MessageAttributes.channel.StringValue;
-
       return new Promise((resolve) => {
         // validate the message body
         let validationResult = validator.validate(message.body, "/Article");
-
         if(validationResult.errors.length) {
           return resolve({
             code: 409,
@@ -95,7 +93,6 @@ module.exports = (secrets) => {
                     });
                   }
                 });
-
             })
             .catch((err) => {
               return resolve({
