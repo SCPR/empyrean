@@ -40,7 +40,7 @@ module.exports = (secrets) => {
     post: (message) => {
       let channel = message.MessageAttributes.channel.StringValue;
 
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         // validate the message body
         let validationResult = validator.validate(message.body, "/Article");
 
@@ -57,7 +57,7 @@ module.exports = (secrets) => {
         filter(article.body, secrets)
           .then((body) => {
             article.body = body; // replace the article body with the filtered version
-            
+
             let render;
 
             try {
