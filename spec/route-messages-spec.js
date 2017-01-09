@@ -27,8 +27,8 @@ let gc          = new GrandCentral({
   sqs:       sqs,
   adapters:  adapters,
   logger:    new Logger(mode),
-  validator: validator
-  // config:   YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'))
+  validator: validator,
+  config:    YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8'))
 });
 
 let generateTestMessage = (opts) => {
