@@ -86,3 +86,6 @@ A `console` command provides a REPL for development.  `npm run console` will bri
 
 An easy way to run tests in debug mode is to use `npm run debug-test`, which will run Jasmine tests bug with Node debugging enabled(meaning execution will pause at breakpoints).
 
+Though Grand Central will create its own local database in development, it is recommended that you use [PouchDB Server](https://github.com/pouchdb/pouchdb-server) or [CouchDB](https://github.com/apache/couchdb) so you can then use Fauxton and have better visibility into the contents of the database.
+
+

@@ -38,7 +38,6 @@ module.exports = (secrets) => {
 
         htmlToAppleJSON(article, secrets)
           .then((json) => {
-            debugger
             client.createArticle({
               channelId: appleSecrets.channels.kpcc,  // eventually this should come from the message
               article: json,
@@ -48,15 +47,15 @@ module.exports = (secrets) => {
               if(err){
                 return resolve({
                   code: 409,
-                  message: "Article rejected.",
+                  message: "Apple News article rejected.",
                   body: err
                 });
               }
 
               resolve({
                 code: 201,
-                message: "Article successfully created.",
-                body: response,
+                message: "Apple News article successfully created.",
+                body: "",
                 revision: response.revision,
                 remoteId: response.id
               });
@@ -97,15 +96,15 @@ module.exports = (secrets) => {
               if(err){
                 return resolve({
                   code: 409,
-                  message: "Article rejected.",
+                  message: "Apple News article rejected.",
                   body: err
                 });
               }
 
               resolve({
                 code: 200,
-                message: "Article successfully updated.",
-                body: response,
+                message: "Apple News article successfully updated.",
+                body: "",
                 revision: response.revision,
                 remoteId: response.id
               });
@@ -128,13 +127,13 @@ module.exports = (secrets) => {
           if(err){
             return resolve({
               code: 409,
-              message: "Article could not be deleted.",
+              message: "Apple News article could not be deleted.",
               body: err
             });
           }
           resolve({
             code: 200,
-            message: "Article successfully deleted.",
+            message: "Apple News article successfully deleted.",
             body: response
           })
 

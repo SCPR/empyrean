@@ -45,7 +45,7 @@ module.exports = (secrets) => {
         if(validationResult.errors.length) {
           return resolve({
             code: 409,
-            message: "There is a problem with the article.",
+            message: "Article validation failed.",
             body: validationResult.errors
           });
         }
@@ -62,7 +62,7 @@ module.exports = (secrets) => {
               render = views.call('instant-article', article)
             } catch(err) {
               return resolve({
-                code: 409,
+                code: 500,
                 message: "Rendering of body failed.",
                 body: err
               })
@@ -78,13 +78,35 @@ module.exports = (secrets) => {
                   }
                 }, (err, response, body) => {
                   if(body && JSON.parse(body).id) {
-                    // debugger
-                    resolve({
-                      code: 201,
-                      message: "Instant article successfully published.",
-                      body: body,
-                      remoteId: JSON.parse(body).id
-                    });
+                    let referenceId = JSON.parse(body).id;
+                    setTimeout(() => {
+                      // We have to make a separate request, once we get our reference ID
+                      // in order to get the final status of the content being published.
+                      //
+                      // A relatively-safe timeout is placed here because the status is not
+                      // always instantly available.
+                      request
+                        .get({
+                          url: `https://graph.facebook.com/${referenceId}?access_token=${fbSecrets.clientAccessToken}`
+                        }, (err, response, body) => {
+                          let json = JSON.parse(body);
+                          if(json.status === "SUCCESS"){
+                            resolve({
+                              code: 201,
+                              message: "Instant article successfully published.",
+                              body: body,
+                              remoteId: json.id
+                            });
+                          } else {
+                            resolve({
+                              code: 409,
+                              message: "Instant article failed to publish.",
+                              body: json,
+                              remoteId: referenceId
+                            })
+                          }
+                        })
+                    }, 10000)
                   } else {
                     resolve({
                       code: 409,
@@ -96,7 +118,7 @@ module.exports = (secrets) => {
             })
             .catch((err) => {
               return resolve({
-                code: 409,
+                code: 500,
                 message: "Rendering of body failed.",
                 body: err
               })
@@ -105,7 +127,7 @@ module.exports = (secrets) => {
           })
           .catch((err) => {
             return resolve({
-              code: 409,
+              code: 500,
               message: "Body filtering failed.",
               body: err
             })            
@@ -141,5 +163,5 @@ module.exports = (secrets) => {
       })
     }
   }
-
 }
+
