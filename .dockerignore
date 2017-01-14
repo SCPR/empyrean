@@ -1,0 +1,12 @@
+*node_modules/*
+*db/*
+*npm-debug.log*
+*secrets.yml*
+*log/*
+*.portable-holes.yml*
+*_replicator/*
+*_users/*
+*pouch__all_dbs__*
+*grand-central-development/*
+*grand-central-test/*
+*log.txt*
