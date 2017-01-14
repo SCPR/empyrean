@@ -4,11 +4,11 @@ const YAML      = require('js-yaml');
 const AWS       = require('aws-sdk');
 const PouchDB   = require('pouchdb');
 PouchDB.plugin(require('pouchdb-upsert'));
-const GrandCentral      = require('./lib/grand-central');
+const GrandCentral  = require('./lib/grand-central');
 const loadAdapters  = require('./lib/adapter-loader');
 const Logger        = require('./lib/logger');
 
-const mode          = process.env.EMPYREAN_ENV || "development";
+const mode          = require('./lib/what-mode')();
 
 let secrets   = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
 

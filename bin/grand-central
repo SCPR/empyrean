@@ -2,14 +2,32 @@
 
 'use strict';
 
-let gc = require('../index.js');
-
-let fs = require('fs');
+const mode          = require('../lib/what-mode')();
+const fs            = require('fs');
+const Logger        = require('../lib/logger');
 
 let bootMessage = fs.readFileSync(`${__dirname}/../boot-message.txt`, 'utf-8');
-let pkg        = JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, 'utf-8'));
+let pkg         = JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, 'utf-8'));
+let logger      = new Logger(mode);
 
-console.log(bootMessage);
-console.log(`v${pkg.version}\n\n\n`);
+if (mode === "production") {
+  // If we are in production mode, secrets
+  // are grabbed from a secure Amazon S3 endpoint.
+  require('../lib/secrets-downloader')()
+    .then(bootGrandCentral)
+    .catch((err) => {
+      logger.error(err);
+      console.log(err);
+    });
+} else {
+  bootGrandCentral();
+}
 
-gc.perform();
+function bootGrandCentral () {
+  return new Promise(() => {
+    let gc = require('../index.js');
+    console.log(bootMessage);
+    console.log(`v${pkg.version}\n\n\n`);
+    gc.perform();
+  })
+}
