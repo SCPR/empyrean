@@ -41,7 +41,7 @@ ADD . /opt/grand-central
 
 RUN source /root/.bashrc && npm install
 
-ENV EMPYREAN_ENV=production
+ENV GRAND_CENTRAL_ENV=production
 
 ENTRYPOINT ["/bin/bash", "--login", "-i", "-c"]
 CMD ["bin/grand-central"]

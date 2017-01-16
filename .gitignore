@@ -9,3 +9,5 @@ _users/
 pouch__all_dbs__
 grand-central-development/
 log.txt
+.env
+config.json
