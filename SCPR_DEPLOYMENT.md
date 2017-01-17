@@ -85,6 +85,6 @@ In the future, builds can be automated.  In fact, it may even be possible to ext
 
 The Grand Central and CouchDB images both run on the same instance.  ECS instances automatically assign `localhost.localdomain` as the hostname of the virtual gateway, which Grand Central uses to communicate with CouchDB on `http://localhost.localdomain:5984/`.
 
-Production secrets get downloaded from S3.  For Grand Central to do this, it takes an access key and ID from environment variables set in the task definition.  I really don't like this, but for some reason I can't seem to get an IAM policy to work with the instance so that it is authorized to download the secrets file.  As soon as I find a way to do this, environment variables won't have to be stored anymore.
+Production secrets get downloaded from S3 by `bin/grand-central`.  For Grand Central to do this, either needs an access key and ID set as environment variables, or the task definition needs an IAM role with a policy that will allow it permission to access the file in S3.
 
 No security has currently been implemented with CouchDB, which is fine because Grand Central can just perform its duties without being exposed 99% of the time.  However, CouchDB's Fauxton interface provides nice viewability for the database, so sometimes I plan on opening up the ports when we need to use Fauxton but keep them closed the rest of the time.  There is an admin user and password for Fauxton stored in Meldium.
