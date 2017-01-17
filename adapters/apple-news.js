@@ -64,8 +64,12 @@ module.exports = (secrets) => {
 
           })
           .catch((err) => {
-            reject(err);
-          });
+            return resolve({
+              code: 500,
+              message: "Body filtering failed.",
+              body: err
+            })            
+          })
       });
     }
 

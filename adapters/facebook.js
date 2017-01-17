@@ -79,7 +79,7 @@ module.exports = (secrets) => {
                 }, (err, response, body) => {
                   if(body && JSON.parse(body).id) {
                     let referenceId = JSON.parse(body).id;
-                    setTimeout(() => {
+                    let checker = () => {
                       // We have to make a separate request, once we get our reference ID
                       // in order to get the final status of the content being published.
                       //
@@ -98,15 +98,21 @@ module.exports = (secrets) => {
                               remoteId: json.id
                             });
                           } else {
-                            resolve({
-                              code: 409,
-                              message: "Instant article failed to publish.",
-                              body: json,
-                              remoteId: referenceId
-                            })
+                            if (json.status === "IN_PROGRESS") {
+                              // Check again in 3 seconds.
+                              setTimeout(checker, 3000);
+                            } else {
+                              resolve({
+                                code: 409,
+                                message: "Instant article failed to publish.",
+                                body: json,
+                                remoteId: referenceId
+                              })
+                            }
                           }
                         })
-                    }, 10000)
+                    }
+                    setTimeout(checker, 10000)
                   } else {
                     resolve({
                       code: 409,

@@ -6,7 +6,7 @@ sqs:
         - all
       MaxNumberOfMessages: 1
       VisibilityTimeout: 100
-      WaitTimeSeconds: 20
+      WaitTimeSeconds: 5
     messages:
       <<: *default
       MessageAttributeNames:
