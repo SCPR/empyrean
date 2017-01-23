@@ -36,8 +36,9 @@ Handlebars.registerHelper('moment', (timeString, formatString) => {
 
 module.exports = (secrets) => {
   let fbSecrets = secrets.adapters.facebook;
-  return {
-    post: (message) => {
+  let adapter = {};
+
+  adapter.post = function (message) {
       let channel = message.MessageAttributes.channel.StringValue;
       return new Promise((resolve) => {
         // validate the message body
@@ -141,12 +142,14 @@ module.exports = (secrets) => {
 
       });
 
-    },
-    put: (message) => {
+    }
+
+    adapter.put = function (message) {
       // Instant Articles are updated in the same way that they are created.
-      this.post(message);
-    },
-    delete: (message) => {
+      return adapter.post(message);
+    }
+
+    adapter.delete = (message) => {
       return new Promise((resolve, reject) => {
         request
           .delete({
@@ -168,6 +171,8 @@ module.exports = (secrets) => {
           })
       })
     }
-  }
+  
+  return adapter;
 }
+
 
