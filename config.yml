@@ -4,7 +4,7 @@ sqs:
     default: &default
       AttributeNames:
         - all
-      MaxNumberOfMessages: 1
+      MaxNumberOfMessages: 5
       VisibilityTimeout: 100
       WaitTimeSeconds: 5
     messages:

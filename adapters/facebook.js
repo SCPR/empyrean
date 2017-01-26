@@ -75,7 +75,8 @@ module.exports = (secrets) => {
                   url: `https://graph.facebook.com/${channel}/instant_articles`,
                   form: {
                     access_token: fbSecrets.clientAccessToken,
-                    html_source: html
+                    html_source: html,
+                    published: true
                   }
                 }, (err, response, body) => {
                   if(body && JSON.parse(body).id) {
@@ -113,7 +114,7 @@ module.exports = (secrets) => {
                           }
                         })
                     }
-                    setTimeout(checker, 10000)
+                    setTimeout(checker, 10000);
                   } else {
                     resolve({
                       code: 409,

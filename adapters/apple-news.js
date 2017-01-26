@@ -41,7 +41,7 @@ module.exports = (secrets) => {
             client.createArticle({
               channelId: appleSecrets.channels.kpcc,  // eventually this should come from the message
               article: json,
-              isPreview: true
+              isPreview: false
             }, (err, response, data) => {
 
               if(err){
@@ -94,7 +94,8 @@ module.exports = (secrets) => {
             client.updateArticle({
               articleId: message.remoteId,
               article: json,
-              revision: message.revision
+              revision: message.revision,
+              isPreview: false
             }, (err, response, data) => {
 
               if(err){
