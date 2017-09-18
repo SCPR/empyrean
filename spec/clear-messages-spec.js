@@ -10,9 +10,6 @@ const Logger        = require('../lib/logger');
 
 const mode      = "test";
 
-// let secrets     = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode];
-
-// let adapters    = {myspace: require('./mocks/adapters/myspace')({})};
 let adapters    = loadAdapters('/.mocks/adapters')
 
 let testMessage = YAML.safeLoad(fs.readFileSync('./spec/fixtures/test-message.yml', 'utf8'));
