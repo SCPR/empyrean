@@ -17,15 +17,15 @@ let filters              = {
 }
 
 let filter = (html, secrets) => {
-  let result = filters.cleanup(html)
+  let result = filters.cleanup(html, secrets)
         .then((html) => {
-          return filters.embedPlaceholders(html);
+          return filters.embedPlaceholders(html, secrets);
         })
         .then((html) => {
           return filters.assetHost(html, secrets);
         })
         .then((html) => {
-          return filters.instantArticles(html);
+          return filters.instantArticles(html, secrets);
         });
   return result;
 }
