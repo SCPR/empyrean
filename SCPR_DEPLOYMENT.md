@@ -1,6 +1,8 @@
 SCPR DEPLOYMENT
 ===============
 
+**NOTE:** This file will soon be obsolete because use of Docker should be fairly straight-forward/universal, and we will no longer be using Amazon ECS.
+
 Here, at SCPR/KPCC, I have decided to go with a Docker-based deployment through Amazon Elastic Container Service(aka ECS).  While the initial setup was a challenge, the goal was to provide an easy way to deploy new versions of Grand Central, upgrade the database software painlessly(CouchDB, in this case), and roll back to previous images.  Hopefully, this should require only limited ops work and, ideally, little to no command line.
 
 # What is Docker?
