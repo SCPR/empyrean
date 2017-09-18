@@ -11,7 +11,7 @@ USER root
 ENV HOME /root
 
 RUN apt-get update --yes && apt-get upgrade --yes
-RUN apt-get install -y --no-install-recommends \ 
+RUN apt-get install -y --no-install-recommends \
   git \
   curl \
   build-essential\
@@ -31,7 +31,7 @@ RUN source $NVM_DIR/nvm.sh && \
     nvm install $NODE_VERSION && \
     nvm alias default $NODE_VERSION && \
     nvm use default && \
-    touch /root/.bashrc && \ 
+    touch /root/.bashrc && \
     echo "source ${NVM_DIR}/nvm.sh" > /root/.bashrc && \
     source /root/.bashrc
 
