@@ -55,8 +55,8 @@ module.exports = (secrets) => {
 
         filter(article.body, secrets)
           .then((body) => {
-            article.body = body; // replace the article body with the filtered version
-
+            article.body        = body; // replace the article body with the filtered version
+            article.currentYear = (new Date()).getFullYear();
             let render;
 
             try {
