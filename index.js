@@ -1,13 +1,15 @@
 'use strict';
+
 const fs           = require('fs'),
       YAML         = require('js-yaml'),
       AWS          = require('aws-sdk'),
       PouchDB      = require('pouchdb'),
-      PouchDB.plugin(require('pouchdb-upsert')),
       GrandCentral = require('./lib/grand-central'),
       loadAdapters = require('./lib/adapter-loader'),
       Logger       = require('./lib/logger'),
       mode         = require('./lib/what-mode')();
+
+PouchDB.plugin(require('pouchdb-upsert'));
 
 let secrets   = YAML.safeLoad(fs.readFileSync('./secrets.yml', 'utf8'))[mode],
     config    = YAML.safeLoad(fs.readFileSync('./config.yml', 'utf8')),
