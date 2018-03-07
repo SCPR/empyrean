@@ -2,15 +2,19 @@ FROM node:9.7-alpine
 
 USER root
 
-ENV HOME /root
+RUN addgroup -S grand-central && adduser -S -g grand-central grand-central 
 
-WORKDIR /root
+WORKDIR /home/grand-central
 
 ADD . .
 
-RUN npm install
+RUN npm install --production
 
-ENV GRAND_CENTRAL_ENV=production
+RUN chmod -R u+X bin
+
+USER grand-central
+
+ENV HOME /home/grand-central
 
 CMD ["bin/grand-central"]
 

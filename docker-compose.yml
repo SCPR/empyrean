@@ -1,0 +1,10 @@
+version: '3'
+services:
+  grand-central:
+    build: .
+    image: scprdev/grand-central
+    env_file: .env
+    hostname: grand-central
+    stdin_open: true
+    tty: true
+

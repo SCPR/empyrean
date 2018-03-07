@@ -3,7 +3,7 @@
 const fs      = require('fs'),
       YAML    = require('js-yaml'),
       fakeSQS = require('./mocks/sqs'),
-      PouchDB = require('pouchdb'),
+      PouchDB = require('pouchdb-core'),
       GrandCentral  = require('../lib/grand-central'),
       Logger        = require('../lib/logger'),
       mode          = "test";

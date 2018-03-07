@@ -18,6 +18,7 @@
     "apple-news": "^1.1.0",
     "aws-sdk": "^2.6.13",
     "cheerio": "^0.22.0",
+    "dotenv": "^5.0.1",
     "express": "^4.14.0",
     "follow-redirects": "^1.2.4",
     "fs-extra": "^1.0.0",
@@ -30,8 +31,11 @@
     "najax": "^0.7.1",
     "node-glob": "^1.2.0",
     "portable-holes": "^1.1.0",
-    "pouchdb": "^6.0.7",
+    "pouchdb-adapter-http": "^6.4.3",
+    "pouchdb-core": "^6.4.3",
     "pouchdb-upsert": "^2.0.2",
+    "pouchdb-adapter-memory": "^6.4.3",
+    "pouchdb-erase": "^1.0.2",
     "request": "^2.78.0",
     "tmp": "0.0.31",
     "to-markdown": "^3.0.3"
@@ -39,8 +43,6 @@
   "devDependencies": {
     "jasmine": "^2.5.2",
     "jasmine-expect": "^3.0.1",
-    "jasmine-node": "^1.14.5",
-    "pouchdb-adapter-memory": "^6.4.3",
-    "pouchdb-erase": "^1.0.2"
+    "jasmine-node": "^1.14.5"
   }
 }
