@@ -28,5 +28,7 @@ function bootGrandCentral () {
     console.log(bootMessage);
     console.log(`v${pkg.version}\n\n\n`);
     gc.perform();
-  })
+  }).catch(err => {
+    logger.error(err);
+  });
 }
